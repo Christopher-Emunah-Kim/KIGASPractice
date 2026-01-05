@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
-#include "GameAbilitySystem/StatusAtrributeSet.h"
+#include "GameAbilitySystem/ResourceAtrributeSet.h"
 #include "TestCharacter.generated.h"
 
 UCLASS()
@@ -36,7 +36,7 @@ public:
 	
 private:
 	UPROPERTY()
-	TObjectPtr<UStatusAtrributeSet> statusAttributes = nullptr;
+	TObjectPtr<UResourceAtrributeSet> resourceAttributes = nullptr;
 
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category= "Ability")

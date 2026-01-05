@@ -4,7 +4,7 @@
 #include "Character/TestCharacter.h"
 #include "AbilitySystemComponent.h"
 #include "Components/WidgetComponent.h"
-#include "GameAbilitySystem/StatusAtrributeSet.h"
+#include "GameAbilitySystem/ResourceAtrributeSet.h"
 #include "Interface/TwinBarResource.h"
 
 // Sets default values
@@ -17,7 +17,7 @@ ATestCharacter::ATestCharacter()
 	barWidgetComp->SetupAttachment(RootComponent);
 	
 	abilitySystemComp = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComp");
-	statusAttributes = CreateDefaultSubobject<UStatusAtrributeSet>("StatusAttributes");
+	resourceAttributes = CreateDefaultSubobject<UResourceAtrributeSet>("ResourceAttributes");
 	
 }
 
@@ -31,21 +31,21 @@ void ATestCharacter::BeginPlay()
 		abilitySystemComp->InitAbilityActorInfo(this, this);
 		
 		//Attribute값 변경에 대한 델리게이트 
-		FOnGameplayAttributeValueChange& onHealthChanged = abilitySystemComp->GetGameplayAttributeValueChangeDelegate(UStatusAtrributeSet::GetHealthAttribute());
+		FOnGameplayAttributeValueChange& onHealthChanged = abilitySystemComp->GetGameplayAttributeValueChangeDelegate(UResourceAtrributeSet::GetHealthAttribute());
 		onHealthChanged.AddUObject(this, &ATestCharacter::OnHealthChanged);
 	}
 	
-	if (statusAttributes)
+	if (resourceAttributes)
 	{
 		UUserWidget* barUI = barWidgetComp->GetWidget();
 		check(barWidgetComp && barUI);
 		
 		if (barUI->Implements<UTwinBarResource>())
 		{
-			ITwinBarResource::Execute_UpdateMaxHealth(barUI, statusAttributes->GetMaxHealth());
-			ITwinBarResource::Execute_UpdateCurrentHealth(barUI, statusAttributes->GetHealth());
-			ITwinBarResource::Execute_UpdateMaxMana(barUI, statusAttributes->GetMaxMana());
-			ITwinBarResource::Execute_UpdateCurrentMana(barUI, statusAttributes->GetMana());
+			ITwinBarResource::Execute_UpdateMaxHealth(barUI, resourceAttributes->GetMaxHealth());
+			ITwinBarResource::Execute_UpdateCurrentHealth(barUI, resourceAttributes->GetHealth());
+			ITwinBarResource::Execute_UpdateMaxMana(barUI, resourceAttributes->GetMaxMana());
+			ITwinBarResource::Execute_UpdateCurrentMana(barUI, resourceAttributes->GetMana());
 		}
 	}
 }
@@ -55,7 +55,7 @@ void ATestCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FString healthString = FString::Printf(TEXT("Health: %.1f / %.1f"), statusAttributes->GetHealth(), statusAttributes->GetMaxHealth());
+	FString healthString = FString::Printf(TEXT("Health: %.1f / %.1f"), resourceAttributes->GetHealth(), resourceAttributes->GetMaxHealth());
 	DrawDebugString(GetWorld(), GetActorLocation(), healthString, nullptr, FColor::Red, 0, true);
 }
 
@@ -69,20 +69,20 @@ void ATestCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void ATestCharacter::OnHealthChanged(const FOnAttributeChangeData& InData)
 {
 	UE_LOG(LogTemp, Warning, TEXT("OnHealthChanged :: Health changed! %.1f -> %.1f"), InData.OldValue, InData.NewValue);
-	ITwinBarResource::Execute_UpdateCurrentHealth(barWidgetComp->GetWidget(), statusAttributes->GetHealth());
+	ITwinBarResource::Execute_UpdateCurrentHealth(barWidgetComp->GetWidget(), resourceAttributes->GetHealth());
 }
 
 void ATestCharacter::OnManaChanged(const FOnAttributeChangeData& InData)
 {
-	ITwinBarResource::Execute_UpdateCurrentMana(barWidgetComp->GetWidget(), statusAttributes->GetMana());
+	ITwinBarResource::Execute_UpdateCurrentMana(barWidgetComp->GetWidget(), resourceAttributes->GetMana());
 }
 
 void ATestCharacter::TestHealthChange(float amount)
 {
-	if (statusAttributes)
+	if (resourceAttributes)
 	{
-		float currentValue = statusAttributes->GetHealth();
-		statusAttributes->SetHealth(currentValue+amount);
+		float currentValue = resourceAttributes->GetHealth();
+		resourceAttributes->SetHealth(currentValue+amount);
 	}
 }
 

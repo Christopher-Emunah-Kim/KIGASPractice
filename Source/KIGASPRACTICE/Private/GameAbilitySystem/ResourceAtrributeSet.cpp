@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GameAbilitySystem/StatusAtrributeSet.h"
+#include "GameAbilitySystem/ResourceAtrributeSet.h"
 #include "GameplayEffectExtension.h"
 
-UStatusAtrributeSet::UStatusAtrributeSet()
+UResourceAtrributeSet::UResourceAtrributeSet()
 {
 	InitMaxHealth(100.f);
 	InitHealth(100.f);
@@ -12,7 +12,7 @@ UStatusAtrributeSet::UStatusAtrributeSet()
 	InitMana(100.f);
 }
 
-void UStatusAtrributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
+void UResourceAtrributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
 	
@@ -25,7 +25,7 @@ void UStatusAtrributeSet::PreAttributeChange(const FGameplayAttribute& Attribute
 	
 }
 
-void UStatusAtrributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
+void UResourceAtrributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 	
@@ -40,7 +40,7 @@ void UStatusAtrributeSet::PostGameplayEffectExecute(const struct FGameplayEffect
 	}
 }
 
-void UStatusAtrributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
+void UResourceAtrributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
 {
 	Super::PostAttributeChange(Attribute, OldValue, NewValue);
 }

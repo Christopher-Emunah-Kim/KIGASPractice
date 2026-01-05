@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
-#include "StatusAtrributeSet.generated.h"
+#include "ResourceAtrributeSet.generated.h"
 
 /**
  * 
@@ -19,12 +19,12 @@
  		GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName) 
  
 UCLASS()
-class KIGASPRACTICE_API UStatusAtrributeSet : public UAttributeSet
+class KIGASPRACTICE_API UResourceAtrributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
 	
 public:
-	UStatusAtrributeSet();
+	UResourceAtrributeSet();
 	
 	//값 검증 및 제한, 순수한 수학적 처리 용도
 	/*
@@ -54,21 +54,21 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "AtrributeSet")
 	FGameplayAttributeData Health;
 	
-	ATTRIBUTE_ACCESSORS(UStatusAtrributeSet, Health)
+	ATTRIBUTE_ACCESSORS(UResourceAtrributeSet, Health)
 	
 	UPROPERTY(BlueprintReadOnly, Category = "AtrributeSet")
 	FGameplayAttributeData MaxHealth;
 	
-	ATTRIBUTE_ACCESSORS(UStatusAtrributeSet, MaxHealth)
+	ATTRIBUTE_ACCESSORS(UResourceAtrributeSet, MaxHealth)
 	
 	UPROPERTY(BlueprintReadOnly, Category = "AtrributeSet")
 	FGameplayAttributeData Mana;
 	
-	ATTRIBUTE_ACCESSORS(UStatusAtrributeSet, Mana)
+	ATTRIBUTE_ACCESSORS(UResourceAtrributeSet, Mana)
 	
 	UPROPERTY(BlueprintReadOnly, Category = "AtrributeSet")
 	FGameplayAttributeData MaxMana;
 	
-	ATTRIBUTE_ACCESSORS(UStatusAtrributeSet, MaxMana)
+	ATTRIBUTE_ACCESSORS(UResourceAtrributeSet, MaxMana)
 	
 };
